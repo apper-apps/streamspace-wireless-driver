@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion'
-import Button from '@/components/atoms/Button'
-import ApperIcon from '@/components/ApperIcon'
-
+import { motion } from "framer-motion";
+import React from "react";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
 const MeetingControls = ({
   isAudioEnabled,
   isVideoEnabled,
@@ -12,6 +12,7 @@ const MeetingControls = ({
   onShowChat,
   onShowParticipants,
   onShowSettings,
+  onShowBackgrounds,
   onLeaveMeeting,
   className = ''
 }) => {
@@ -60,13 +61,22 @@ const MeetingControls = ({
       >
         <ApperIcon 
           name={isScreenSharing ? 'MonitorStop' : 'Monitor'} 
-          size={20}
+size={20}
         />
+      </Button>
+      
+      {/* Virtual Background */}
+      <Button
+        variant="ghost"
+        size="lg"
+        onClick={onShowBackgrounds}
+        className="rounded-full p-3"
+      >
+        <ApperIcon name="ImagePlus" size={20} />
       </Button>
       
       {/* Divider */}
       <div className="w-px h-8 bg-slate-600" />
-      
       {/* Chat */}
       <Button
         variant="ghost"

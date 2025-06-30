@@ -1,13 +1,15 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import Button from '@/components/atoms/Button'
-import DeviceSelector from '@/components/molecules/DeviceSelector'
-import ApperIcon from '@/components/ApperIcon'
-
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import VirtualBackgroundSelector from "@/components/organisms/VirtualBackgroundSelector";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import DeviceSelector from "@/components/molecules/DeviceSelector";
 const MeetingSettings = ({ 
   currentSettings,
   onSettingsChange,
   onClose,
+  showBackgroundSelector = false,
+  onShowBackgroundSelector,
   className = '' 
 }) => {
   const [settings, setSettings] = useState({
@@ -81,11 +83,23 @@ const MeetingSettings = ({
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <ApperIcon name="Video" size={48} className="text-slate-500" />
-              </div>
+</div>
             </div>
           </div>
+          
+          {/* Virtual Background */}
+          <div className="space-y-2">
+            <h4 className="text-lg font-medium text-slate-200">Virtual Background</h4>
+            <Button 
+              variant="secondary" 
+              onClick={onShowBackgroundSelector}
+              className="w-full justify-start"
+            >
+              <ApperIcon name="ImagePlus" size={16} className="mr-2" />
+              Configure Virtual Backgrounds
+            </Button>
+          </div>
         </div>
-        
         {/* Footer */}
         <div className="flex justify-end space-x-3 p-6 border-t border-slate-600">
           <Button variant="secondary" onClick={onClose}>
@@ -93,9 +107,20 @@ const MeetingSettings = ({
           </Button>
           <Button variant="primary" onClick={onClose}>
             Apply Settings
-          </Button>
+</Button>
         </div>
       </div>
+      
+      {/* Virtual Background Selector Modal */}
+      {showBackgroundSelector && (
+        <VirtualBackgroundSelector
+          currentBackground={currentSettings.virtualBackground}
+          onBackgroundChange={(backgroundId) => 
+            onSettingsChange({ ...currentSettings, virtualBackground: backgroundId })
+          }
+          onClose={() => onShowBackgroundSelector(false)}
+        />
+      )}
     </motion.div>
   )
 }
